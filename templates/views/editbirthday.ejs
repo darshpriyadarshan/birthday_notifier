@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Edit birthday</title>
+</head>
+
+<body>
+    <header>
+        <h1>Edit birthday of <%= birthday.name %></h1>
+    </header>
+
+    <form action="/birthdays/<%= birthday._id%>?_method=PATCH" method="POST">
+        <label>Name</label>
+        <input type="text" name="name" value="<%= birthday.name %>">
+        <br><br>
+
+        <label>Date</label>
+        <input type="date" name="date" value="<%= birthday.date.toISOString().substring(0, 10) %>">
+        <br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+
+</body>
+
+</html>

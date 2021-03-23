@@ -1,0 +1,18 @@
+<h1>Birthdays list</h1>
+
+<% birthdays.forEach(function(birthday){ %>
+    <div>
+        <h2>
+            <%= birthday.name%>
+        </h2>
+        <h2>
+            <%= birthday.date%>
+        </h2>
+        <a href="/birthdays/<%= birthday._id%>">Details</a>
+        <br>
+    </div>
+
+<% }) %>
+
+<br><br>
+<a href="/birthdays/new">Add new Birthday</a>
