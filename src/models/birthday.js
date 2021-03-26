@@ -9,7 +9,13 @@ const Birthday = mongoose.model('Birthday', {
     date: {
         type: Date,
         required: true
+    },
+    createdBy:{
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'User'
     }
+
 })
 
 module.exports = Birthday
