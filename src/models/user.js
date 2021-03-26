@@ -41,30 +41,32 @@ const userSchema = new mongoose.Schema({
     }]
 })
 
-//this is called in both signup and login
+//virtual data for linked
+userSchema.virtual('birthdays', {
+    ref: 'Birthday',
+    localField: '_id',
+    foreignField: 'createdBy'
+})
+
+//this is called on instance hence methods
 userSchema.methods.generateAuthToken = async function () {
-    const token = jwt.sign({ _id: this._id.toString() }, 'thisismynewcourse')
+    const token = jwt.sign({ _id: this._id.toString() }, 'thisistrail')
     this.tokens = this.tokens.concat({ token })
     await this.save()
     return token
 }
 
-//verify email password while logging in
+//this is called on Model hence statics
 userSchema.statics.findByCred = async (email, password) => {
     const user = await User.findOne({email})
     if(!user)
-    {
         throw new Error('Unable to login')
-    }
-
     const isMatch = await bcrypt.compare(password, user.password)
     if(!isMatch)
-    {
         throw new Error('Unable to login')
-    }
     return user
-    console.log('success')
 }
+
 //middleware for hashing
 userSchema.pre('save', async function (next) {
     if(this.isModified('password'))
@@ -74,7 +76,6 @@ userSchema.pre('save', async function (next) {
 
     next()
 })
-
 
 
 const User = mongoose.model('User', userSchema)
