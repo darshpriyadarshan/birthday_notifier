@@ -1,24 +1,23 @@
-<h1>One Birthday</h1>
+<% if(birthday){ %>
+    <div>
+        <h2><%= birthday.name%></h2>
+        <h2><%= birthday.date%></h2>
+    </div>
 
-<div>
-    <h2>
-        <%= birthday.name%>
-    </h2>
-    <h2>
-        <%= birthday.date%>
-    </h2>
-</div>
+    <br>
 
-<br>
+    <div>
+        <a href="/birthdays/<%= birthday._id%>/edit">Edit</a>
+    </div>
 
-<div>
-    <a href="/birthdays/<%= birthday._id%>/edit">Edit</a>
-</div>
+    <br>
 
-<br>
+    <div>
+        <form action="/birthdays/<%= birthday._id%>?_method=DELETE" method="POST">
+            <button>Delete</button>
+        </form>
+    </div>
 
-<div>
-    <form action="/birthdays/<%= birthday._id%>?_method=DELETE" method="POST">
-        <button>Delete</button>
-    </form>
-</div>
+<% } else{ %>
+    <h2>You can only view birthdays added by you</h2>
+<% } %>
