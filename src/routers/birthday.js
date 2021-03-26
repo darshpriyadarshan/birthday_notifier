@@ -1,14 +1,21 @@
 const express = require('express')
 const methodOverride = require('method-override')
+const bodyParser = require('body-parser');
 const Birthday = require('../models/birthday')
+const User = require('../models/user')
+const auth = require('../middleware/auth')
 const router = new express.Router()
 
 router.use(methodOverride('_method'))
+router.use(bodyParser.urlencoded({ extended: false }));
 
-router.post('/birthdays', (req, res) => {
-    console.log(req.body)
-    const birthday = new Birthday(req.body)
 
+router.post('/birthdays', auth, (req, res) => {
+    console.log("post /birthdays")
+    const birthday = new Birthday({
+        ...req.body, //ES6 spread operator
+        createdBy: req.user._id
+    })
     birthday.save().then(() => {
         res.redirect('/birthdays')
     }).catch((e) => {
@@ -16,21 +23,27 @@ router.post('/birthdays', (req, res) => {
     })
 })
 
-router.get('/birthdays', async (req, res) => {
-
-    const birthdays = await Birthday.find()
-    if(!birthdays)
-        console.log("No bday")
-    res.render("birthday", {birthdays: birthdays})
+router.get('/birthdays', auth, async (req, res) => {
+    try {
+        console.log("get /birthdays")
+        const birthdays = await Birthday.find({createdBy: req.user._id})
+        if(!birthdays.length)
+            console.log("No bday")
+        res.render("birthday", {birthdays: birthdays})
+    } catch (e) {
+        res.status(400).send(e)
+    }
 })
 
-router.get('/birthdays/new', (req, res) => {
+router.get('/birthdays/new', auth, (req, res) => {
+    console.log("get /birthdays/new")
     res.render("newbirthday")
 })
 
-router.get('/birthdays/:id', async (req, res) => {
+router.get('/birthdays/:id', auth, async (req, res) => {
     try {
-        const birthday = await Birthday.findOne({ _id: req.params.id})
+        console.log("get /birthdays/:id")
+        const birthday = await Birthday.findOne({ _id: req.params.id, createdBy: req.user._id})
 
         if (!birthday)
             console.log("No bday")
@@ -40,9 +53,10 @@ router.get('/birthdays/:id', async (req, res) => {
     }
 })
 
-router.get('/birthdays/:id/edit', async (req, res) => {
+router.get('/birthdays/:id/edit', auth, async (req, res) => {
     try {
-        const birthday = await Birthday.findOne({ _id: req.params.id })
+        console.log("get /birthdays/:id/edit")
+        const birthday = await Birthday.findOne({ _id: req.params.id, createdBy: req.user._id})
 
         if (!birthday)
             console.log("No bday")
@@ -51,9 +65,12 @@ router.get('/birthdays/:id/edit', async (req, res) => {
         res.status(400).send(e)
     }
 })
-router.patch('/birthdays/:id', async (req, res) => {
+router.patch('/birthdays/:id', auth, async (req, res) => {
     try {
-        const birthday = await Birthday.findOneAndUpdate({ _id: req.params.id}, req.body)
+        console.log("patch /birthdays/:id")
+        const birthday = await Birthday.findOneAndUpdate({ _id: req.params.id, 
+                                                           createdBy: req.user._id}, 
+                                                           req.body)
         if (!birthday)
             console.log("No bday")
         res.redirect("/birthdays")
@@ -62,9 +79,10 @@ router.patch('/birthdays/:id', async (req, res) => {
     }
 })
 
-router.delete('/birthdays/:id', async (req, res) => {
+router.delete('/birthdays/:id', auth, async (req, res) => {
     try {
-        const birthday = await Birthday.findOneAndDelete({ _id: req.params.id})
+        console.log("delete /birthdays/:id")
+        const birthday = await Birthday.findOneAndDelete({ _id: req.params.id, createdBy: req.user._id})
 
         if (!birthday) 
             console.log("No bday")
