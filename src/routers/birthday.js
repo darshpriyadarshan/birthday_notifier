@@ -27,8 +27,17 @@ router.get('/birthdays', auth, async (req, res) => {
     try {
         console.log("get /birthdays")
         const birthdays = await Birthday.find({createdBy: req.user._id})
+        const formatter = new Intl.DateTimeFormat('en', { month: 'long', day: 'numeric' });
+
         if(!birthdays.length)
             console.log("No bday")
+        else
+        {
+            birthdays.forEach((birthday) => {
+                birthday.date2 = formatter.format(birthday.date)
+            })
+        }
+
         res.render("birthday", {birthdays: birthdays})
     } catch (e) {
         res.status(400).send(e)
