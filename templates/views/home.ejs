@@ -1,15 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Home</title>
-</head>
-<body>
-    <h1> This is home page</h1>
+<%- include("./partials/header.ejs") %>
+
+<div class="container">
+    <header class="jumbotron">
+        <div class="container">
+            <h1> Welcome to Birthday notifier </h1>
+            <p> You will be sent an email to remind you of your friend's birthday </p>
+        </div>
+    </header>
     <a href="/register">Signup</a>
     <br>
     <a href="/login">Login</a>
     <br>
     <a href="/birthdays">All Birthdays</a>
     <br>
-</body>
-</html>
+</div>
+<%- include("./partials/footer.ejs") %>
