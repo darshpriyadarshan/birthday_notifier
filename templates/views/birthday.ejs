@@ -1,22 +1,43 @@
-<h1>Birthdays list</h1>
-<% if(birthdays){ %>
-    <% birthdays.forEach(function(birthday){ %>
-        <div>
-            <h2>
-                <%= birthday.name%>
-            </h2>
-            <h2>
-                <%= birthday.date%>
-            </h2>
-            <a href="/birthdays/<%= birthday._id%>">Details</a>
-            <br>
-        </div>
+<%- include("./partials/header.ejs") %>
 
-    <% }) %>
-<% } %>
-
+<div class="container">
+    <h1>Birthdays you have added</h1>
+</div>
+<div class="container"
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col-6">Birthday</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+            <% if(birthdays){ %>
+                <% birthdays.forEach(function(birthday){ %>
+                    <tr>
+                        <td style="width:30%">
+                            <%= birthday.name%>
+                        </td>
+                        <td style="width:30%">
+                            <%= birthday.date2%>
+                        </td>
+                        <td style="width:10%">
+                            <a class="col" href="/birthdays/<%= birthday._id%>">Details</a>
+                        </td>
+                    </tr>
+                <% }) %>
+            <% } %>
+            </tbody>
+        </table>
+    </div>
+<!-- </div> -->
 <br><br>
-<a href="/birthdays/new">Add new Birthday</a>
+
+<p>
+    <a class="btn btn-primary btn-large" href="/birthdays/new">Add new Birthday</a>
+</p>
 
 <form action="/logout" method="POST">
     <button>Log out</button>
@@ -25,3 +46,5 @@
 <form action="/logoutall" method="POST">
     <button>Log out from everywhere</button>
 </form>
+
+<%- include("./partials/footer.ejs") %>
