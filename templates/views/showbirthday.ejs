@@ -1,3 +1,4 @@
+<%- include("./partials/header.ejs") %>
 <% if(birthday){ %>
     <div>
         <h2><%= birthday.name%></h2>
@@ -21,3 +22,5 @@
 <% } else{ %>
     <h2>You can only view birthdays added by you</h2>
 <% } %>
+
+<%- include("./partials/footer.ejs") %>
