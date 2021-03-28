@@ -11,6 +11,7 @@
                     <th scope="col">Name</th>
                     <th scope="col-6">Birthday</th>
                     <th scope="col"></th>
+                    <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
@@ -24,7 +25,10 @@
                             <%= birthday.date2%>
                         </td>
                         <td style="width:10%">
-                            <a class="col" href="/birthdays/<%= birthday._id%>">Details</a>
+                            <a class="col" href="/birthdays/<%= birthday._id%>/edit">Edit</a>
+                        </td>
+                        <td style="width:10%">
+                            <a class="col" href="/birthdays/<%= birthday._id%>?_method=DELETE"">Delete</a>
                         </td>
                     </tr>
                 <% }) %>
@@ -32,12 +36,13 @@
             </tbody>
         </table>
     </div>
-</div>
-<br><br>
-
-<p>
     <a class="btn btn-primary btn-large" href="/birthdays/new">Add new Birthday</a>
-</p>
+</div>
+<!-- <br><br> -->
+
+<!-- <p>
+    <a class="btn btn-primary btn-large" href="/birthdays/new">Add new Birthday</a>
+</p> -->
 
 <!-- <form action="/logout" method="POST">
     <button>Log out</button>
