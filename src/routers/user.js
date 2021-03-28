@@ -25,12 +25,13 @@ router.post('/register', async (req, res) => {
             res.redirect('register')
         })
     } catch (e) {
-        res.redirect('register')
+        res.render('error', { error: "Email already exists" })
     }
 })
 
 router.post('/login', async (req, res) => {
     try {
+        console.log("post /login")
         const user = await User.findByCred(req.body.email, req.body.password)
         const token = await user.generateAuthToken()
         user.save().then(() => {
@@ -40,7 +41,7 @@ router.post('/login', async (req, res) => {
             res.redirect('register')
         })
     } catch (e) {
-        res.redirect('login')
+        res.render('error', {error: "Email/Password is incorrect"})
     }
 
 })

@@ -13,8 +13,7 @@ const auth = async (req, res, next) => {
         req.user = user
         next()
     } catch (e) {
-            console.log(e)
-            res.send("<h1>You will have to login first!!!</h1>")
+            res.render('error',{error:"You have to login first!"})
     }
 }
 
