@@ -1,7 +1,7 @@
 //starting point for the app
 const express = require('express')
 const path = require('path')
-const bodyParser = require('body-parser');
+const bodyParser = require('body-parser')
 const userRouter = require('./routers/user')
 const birthdayRouter = require('./routers/birthday')
 
