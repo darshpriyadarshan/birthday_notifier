@@ -1,7 +1,10 @@
 const express = require('express')
 const User = require('../models/user')
+const methodOverride = require('method-override')
 const auth = require('../middleware/auth')
 const router = new express.Router()
+
+router.use(methodOverride('_method'))
 
 router.get('/register', (req, res) => {
     res.render('register')
@@ -42,7 +45,7 @@ router.post('/login', async (req, res) => {
 
 })
 
-router.post('/logout', auth, async (req, res) => {
+router.get('/logout', auth, async (req, res) => {
     try {
         //req.user.tokens has all the tokens, each as a separate document with _id and token fields
         req.user.tokens = req.user.tokens.filter((tokenobj) => {
