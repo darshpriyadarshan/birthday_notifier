@@ -1,6 +1,6 @@
 const express = require('express')
 const methodOverride = require('method-override')
-const bodyParser = require('body-parser');
+const bodyParser = require('body-parser')
 const Birthday = require('../models/birthday')
 const User = require('../models/user')
 const auth = require('../middleware/auth')
@@ -8,7 +8,13 @@ const router = new express.Router()
 
 router.use(methodOverride('_method'))
 router.use(bodyParser.urlencoded({ extended: false }));
-
+router.use( (req, res, next) => {
+    if (req.query._method == 'DELETE') {
+        req.method = 'DELETE';
+        req.url = req.path;
+    }
+    next();
+});
 
 router.post('/birthdays', auth, (req, res) => {
     console.log("post /birthdays")
