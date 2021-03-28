@@ -1,21 +1,19 @@
 <%- include("./partials/header.ejs") %>
-<body>
-    <header>
-        <h1>Edit birthday of <%= birthday.name %></h1>
-    </header>
 
-    <form action="/birthdays/<%= birthday._id%>?_method=PATCH" method="POST">
-        <label>Name</label>
-        <input type="text" name="name" value="<%= birthday.name %>">
-        <br><br>
-
-        <label>Date</label>
-        <input type="date" name="date" value="<%= birthday.date.toISOString().substring(0, 10) %>">
-        <br><br>
-
-        <button type="submit">Submit</button>
-    </form>
-
-</body>
-
-<%- include("./partials/footer.ejs") %>
+<div class="container">
+    <h1 style="text-align: center;">Edit birthday of <%= birthday.name %></h1>
+    <div style="width: 30%; margin: 25px auto;">
+        <form action="/birthdays/<%= birthday._id%>?_method=PATCH" method="POST">
+            <div class="form-group">
+                <input class="form-control" type="text" name="name" value="<%= birthday.name %>">
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="date" name="date" value="<%= birthday.date.toISOString().substring(0, 10) %>">
+            </div>
+            <div class="form-group">
+                <button class="btn btn-outline-dark type=" submit">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- <%- include("./partials/footer.ejs") %> -->
