@@ -26,7 +26,11 @@ app.use(userRouter)
 app.use(birthdayRouter)
 
 app.get('/', (req,res) => {
-    res.render('home.ejs')
+    res.render('home')
+})
+
+app.get('/about', (req, res) => {
+    res.render('about')
 })
 
 app.listen(port, () => {
