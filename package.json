@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/index.js",
-    "dev": "nodemon src/index.js"
+    "dev": "env-cmd ./config/dev.env nodemon src/index.js"
   },
   "keywords": [],
   "author": "",
@@ -16,12 +16,15 @@
     "ejs": "^3.1.6",
     "express": "^4.16.4",
     "jsonwebtoken": "^8.4.0",
+    "mailgun-js": "^0.22.0",
     "method-override": "^2.3.5",
     "mongodb": "^3.1.10",
     "mongoose": "^5.3.16",
+    "node-cron": "^2.0.3",
     "validator": "^10.9.0"
   },
   "devDependencies": {
+    "env-cmd": "^8.0.2",
     "nodemon": "^1.18.9"
   }
 }
