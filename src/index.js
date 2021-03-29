@@ -5,13 +5,14 @@ const bodyParser = require('body-parser')
 const userRouter = require('./routers/user')
 const birthdayRouter = require('./routers/birthday')
 
-require('./db/mongoose')//this ensures mongoose.js runs thereby connecting to db
+require('./db/mongoose') //this ensures mongoose.js runs thereby connecting to db
+require('./emails/sendemail') //runs the cron job
 
 const User = require('./models/user')//used for creating instances of model inside post
 const Birthday = require('./models/birthday')
 
 const app = express()
-const port = process.env.PORT || 3000
+const port = process.env.PORT
 
 const publicDirectoryPath = path.join(__dirname, '../public')
 const viewsPath = path.join(__dirname, '../templates/views')
