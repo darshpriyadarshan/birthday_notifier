@@ -32,8 +32,8 @@ cron.schedule('0 0 9 * * *', async function () {
             from: 'Excited User <me@samples.mailgun.org>',
             to: item.email,
             subject: 'Reminder: ' + item.name + '\'s birthday is tomorrow',
-            text: 'Hey ' + item.senderName + 'you have asked us to remind you of your friend' + item.name + '\'s birthday.' +
-                 'It\'s tomorrow on ' + item.birthday + '. Hope this helped'
+            text: 'Hey ' + item.senderName + ' you have asked us to remind you of your friend ' + item.name + '\'s birthday.' +
+                ' It\'s tomorrow on ' + item.birthday + '. Hope this helped.'
         }
 
         mailgun.messages().send(data, (error, body) => {
