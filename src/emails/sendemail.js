@@ -29,7 +29,7 @@ cron.schedule('0 0 9 * * *', async function () {
 
     for(const item of list){
         const data = {
-            from: 'Excited User <me@samples.mailgun.org>',
+            from: 'Birthday Notifier <' + item.email + '>',
             to: item.email,
             subject: 'Reminder: ' + item.name + '\'s birthday is tomorrow',
             text: 'Hey ' + item.senderName + ' you have asked us to remind you of your friend ' + item.name + '\'s birthday.' +
