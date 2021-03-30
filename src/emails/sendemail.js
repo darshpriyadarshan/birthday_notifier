@@ -3,23 +3,23 @@ const cron = require('node-cron')
 require('../db/mongoose')
 const mailgun = require('mailgun-js')({ apiKey: process.env.API_KEY, domain: process.env.DOMAIN })
 
-isTomorrow = (date1, date2) => {
-    d1 = date1.split(' ')
-    d2 = date2.split(' ')
-
-    if (d1[0] == d2[0] && parseInt(d1[1], 10) - 1 == parseInt(d2[1], 10))
+isTomorrow = (date, formatter) => {
+    const tomorrow = new Date()
+    tomorrow.setDate(tomorrow.getDate() + 1)
+    tDate = formatter.format(tomorrow)
+    if(date==tDate)
         return true
     return false
 }
 
 cron.schedule('0 0 9 * * *', async function () {
-    const formatter = new Intl.DateTimeFormat('en', { month: 'long', day: 'numeric' });
+    const formatter = new Intl.DateTimeFormat('en', { month: 'long', day: 'numeric' })
     const list = []
     const birthdays = await Birthday.find()
     for (const birthday of birthdays) {
         birthday.date2 = formatter.format(birthday.date)
         await birthday.populate('createdBy').execPopulate()
-        if (isTomorrow(birthday.date2, formatter.format(Date.now())))
+        if (isTomorrow(birthday.date2, formatter))
             list.push({ 'email': birthday.createdBy.email,
                         'senderName': birthday.createdBy.name,
                         'name': birthday.name,
