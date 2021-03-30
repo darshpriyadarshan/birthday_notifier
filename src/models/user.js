@@ -50,9 +50,13 @@ userSchema.virtual('birthdays', {
 
 //this is called on instance hence methods
 userSchema.methods.generateAuthToken = async function () {
+    console.log('in generateAuthtoken')
     const token = jwt.sign({ _id: this._id.toString() }, process.env.JWT_SECRET)
+    console.log('Authtoken generated')
     this.tokens = this.tokens.concat({ token })
+    console.log("append token")
     await this.save()
+    console.log("token saved")
     return token
 }
 
