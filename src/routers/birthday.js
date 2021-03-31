@@ -55,19 +55,6 @@ router.get('/birthdays/new', auth, (req, res) => {
     res.render("newbirthday")
 })
 
-// router.get('/birthdays/:id', auth, async (req, res) => {
-//     try {
-//         console.log("get /birthdays/:id")
-//         const birthday = await Birthday.findOne({ _id: req.params.id, createdBy: req.user._id})
-
-//         if (!birthday)
-//             console.log("No bday")
-//         res.render("showbirthday", {birthday: birthday})
-//     } catch (e) {
-//         res.status(400).send(e)
-//     }
-// })
-
 router.get('/birthdays/:id/edit', auth, async (req, res) => {
     try {
         console.log("get /birthdays/:id/edit")
@@ -80,6 +67,7 @@ router.get('/birthdays/:id/edit', auth, async (req, res) => {
         res.status(400).send(e)
     }
 })
+
 router.patch('/birthdays/:id', auth, async (req, res) => {
     try {
         console.log("patch /birthdays/:id")

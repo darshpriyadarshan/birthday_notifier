@@ -18,9 +18,7 @@ router.post('/register', async (req, res) => {
     try{
         console.log("post /register")
         const user = new User(req.body)
-        console.log("got the user")
         const token = await user.generateAuthToken()
-        console.log("token generated")
         user.save().then(() => {
             res.cookie('token', token, { sameSite: true});
             res.redirect('birthdays')
